@@ -1,5 +1,6 @@
-export default {
-  buildModules: ['@nuxt/typescript-build'],
+import { Configuration } from '@nuxt/types'
+
+const nuxtConfig: Configuration = {
   mode: 'spa',
   /*
    ** Headers of the page
@@ -34,7 +35,8 @@ export default {
    */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module'
+    '@nuxtjs/eslint-module',
+    '@nuxt/typescript-build'
   ],
   /*
    ** Nuxt.js modules
@@ -54,9 +56,18 @@ export default {
    ** Build configuration
    */
   build: {
+    cache: true,
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
+    // extend (config, ctx) {}
+    extend (config, { isClient }) {
+      if (isClient) {
+        config.devtool = '#source-map'
+      }
+    }
   }
+
 }
+
+export default nuxtConfig
