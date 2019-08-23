@@ -1,5 +1,5 @@
 <template>
-    <b-modal :ref="refs">
+    <b-modal ref="modal">
       id: {{ todo.id }},<br>
       isDone: {{ todo.isDone }}<br>
       title: {{ todo.title }}<br>
@@ -7,16 +7,28 @@
     </b-modal>
 </template>
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Ref, Vue } from 'vue-property-decorator'
 import { Todo } from '@/interface/todo'
 
 @Component
 export default class Modal extends Vue {
-  @Prop()
-  refs!: string
+  @Ref() modal!: any // TODO 本当に!を入れないといけないのか。anyを指定するのは多分間違ってる
 
-  @Prop()
-  todo!: Todo
+  // TODO interfaceのせいで初期値をちゃんと入れないといけないようだけど
+  // そうではない方法がある気がする
+  todo: Todo = {
+    id: 0,
+    title: '',
+    isDone: true,
+    detail: ''
+  }
+
+  created() {
+    this.$on('show', (todo: Todo) => {
+      this.todo = todo
+      this.modal.show()
+    })
+  }
 }
 </script>
 <style lang="scss">

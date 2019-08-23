@@ -3,13 +3,21 @@
     <h1>Todo</h1>
     <b-list-group>
       <b-list-group-item
-        button
-        :id="todo.id"
+        class="cnt-todo-list"
         :key="todo.id"
-        @click="showDetail"
         v-for="todo in todoList"
       >
-        {{ todo.title }}
+        <b-form-checkbox
+          v-model="todo.isDone"
+        >
+          {{ todo.title }}
+        </b-form-checkbox>
+        <b-button
+          size="sm"
+          @click="showDetail(todo.id)"
+        >
+          showDetail
+        </b-button>
       </b-list-group-item>
     </b-list-group>
     <b-button-group class="mt-3">
@@ -18,14 +26,13 @@
       <b-button>Button 3</b-button>
     </b-button-group>
     <modal-todo-detail
-      refs="modal-detail"
-      :todo="todoList[0]"
+      ref="modal"
     />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Emit, Ref } from 'vue-property-decorator'
 import modalTodoDetail from '@/components/modalTodoDetail.vue'
 import { Todo } from '@/interface/todo'
 
@@ -35,27 +42,36 @@ import { Todo } from '@/interface/todo'
   }
 })
 export default class Index extends Vue {
+  //!を使用しているけどどうやら初期値を指定しないといけないらしい
+  @Ref() modal!: modalTodoDetail
+
   name: string = 'kazuya hama'
   todoList: Todo[] = [
     {
-      id: 1,
+      id: 0,
       title: 'いぬにご飯をあげる',
-      isDone: false,
+      isDone: true,
       detail: '本当は夕方にもあげたい。'
     },
     {
-      id: 2,
+      id: 1,
       title: 'スーパーでマヨを買う',
       isDone: false,
       detail: 'かならずキューピー出ないといけない。カロリーオフもだめだ'
     }
   ]
-  showDetail() {
-    console.log('showDetail', this)
-    this.$refs['modal-detail'].show()
+
+  getTodoById(id: number) {
+    return this.todoList.find(todo => todo.id === id)
+  }
+  showDetail(id: number) {
+    this.modal.$emit('show', this.getTodoById(id))
   }
 }
 </script>
 
 <style>
+.cnt-todo-list {
+  display: flex;
+}
 </style>
