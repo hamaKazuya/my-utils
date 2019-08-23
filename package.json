@@ -34,6 +34,7 @@
     "jest": "^24.1.0",
     "prettier": "^1.16.4",
     "vue-jest": "^4.0.0-0",
-    "vue-property-decorator": "^8.2.1"
+    "vue-property-decorator": "^8.2.1",
+    "vuex-module-decorators": "^0.10.1"
   }
 }

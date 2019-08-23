@@ -8,7 +8,7 @@
 </template>
 <script lang="ts">
 import { Component, Ref, Vue } from 'vue-property-decorator'
-import { Todo } from '@/interface/todo'
+import { Todo } from '@/types/todo/todo'
 
 @Component
 export default class Modal extends Vue {

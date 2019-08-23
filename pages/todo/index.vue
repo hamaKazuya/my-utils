@@ -2,7 +2,7 @@
   <div class="container">
     <h1>Todo</h1>
     <b-list-group>
-      <b-list-group-item
+      <!-- <b-list-group-item
         class="cnt-todo-list"
         :key="todo.id"
         v-for="todo in todoList"
@@ -18,7 +18,7 @@
         >
           showDetail
         </b-button>
-      </b-list-group-item>
+      </b-list-group-item> -->
     </b-list-group>
     <b-button-group class="mt-3">
       <b-button variant="primary">Add</b-button>
@@ -34,7 +34,8 @@
 <script lang="ts">
 import { Component, Vue, Emit, Ref } from 'vue-property-decorator'
 import modalTodoDetail from '@/components/modalTodoDetail.vue'
-import { Todo } from '@/interface/todo'
+import { todoModule } from '@/store/todo'
+import { TodoState, Todo } from '@/types/todo/todo'
 
 @Component({
   components: {
@@ -46,23 +47,13 @@ export default class Index extends Vue {
   @Ref() modal!: modalTodoDetail
 
   name: string = 'kazuya hama'
-  todoList: Todo[] = [
-    {
-      id: 0,
-      title: 'いぬにご飯をあげる',
-      isDone: true,
-      detail: '本当は夕方にもあげたい。'
-    },
-    {
-      id: 1,
-      title: 'スーパーでマヨを買う',
-      isDone: false,
-      detail: 'かならずキューピー出ないといけない。カロリーオフもだめだ'
-    }
-  ]
+  // todoList: Todo[] = this.$store.state.todos
 
+  created() {
+    debugger
+  }
   getTodoById(id: number) {
-    return this.todoList.find(todo => todo.id === id)
+    return todoModule.todos.find(todo => todo.id === id)
   }
   showDetail(id: number) {
     this.modal.$emit('show', this.getTodoById(id))
