@@ -12,10 +12,10 @@ import { TodoObj } from '@/types/todo'
 
 @Component
 export default class Modal extends Vue {
-  @Ref() modal!: any // TODO 本当に!を入れないといけないのか。anyを指定するのは多分間違ってる
-
-  // TODO interfaceのせいで初期値をちゃんと入れないといけないようだけど
-  // そうではない方法がある気がする
+  // FIXME 本当に!を入れないといけないのか。anyを指定するのは多分間違ってる
+  @Ref() modal!: any
+  // FIXME interfaceを指定している場合
+  // 初期値をinterfaceに合わせないといけない？面倒だし行が増えるし
   todo: TodoObj = {
     id: 0,
     title: '',
@@ -24,7 +24,7 @@ export default class Modal extends Vue {
   }
 
   created() {
-    // on以外ほうほうないのかな
+    // FIXME on以外方法ないのかな
     this.$on('show', (todo: TodoObj) => {
       this.todo = todo
       debugger
