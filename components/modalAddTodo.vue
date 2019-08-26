@@ -9,27 +9,60 @@
       @submit.stop.prevent="onSubmit"
     >
       <b-row class="mb-3">
+        <b-col sm="3">id</b-col>
+        <b-col sm="9">
+          <ValidationProvider
+            name="id"
+            rules="required|numeric|max_value:999|min_value:0"
+            v-slot="{ errors, flags }"
+          >
+            {{ flags }}
+            <b-form-input
+              id="title"
+              v-model="form.id"
+              type="number"
+              placeholder="todoタイトル"
+            />
+            <span class="text-danger">{{ errors[0] }}</span>
+          </ValidationProvider>
+        </b-col>
+      </b-row>
+      <b-row class="mb-3">
         <b-col sm="3">タイトル</b-col>
         <b-col sm="9">
-          <b-form-input
-            id="title"
-            v-model="form.title"
-            type="text"
-            required
-            placeholder="todoタイトル"
-          />
+          <ValidationProvider
+            rules="secret"
+            v-slot="{ errors }"
+          >
+            <b-form-input
+              id="title"
+              name="id"
+              v-model="form.title"
+              type="text"
+              required
+              placeholder="todoタイトル"
+            />
+            <span class="text-danger">{{ errors[0] }}</span>
+          </ValidationProvider>
         </b-col>
       </b-row>
       <b-row class="mb-3">
         <b-col sm="3">詳細</b-col>
         <b-col sm="9">
-          <b-form-textarea
-            id="deail"
-            v-model="form.detail"
-            placeholder="詳細を記入します"
-            rows="3"
-            max-rows="6"
-          />
+          <ValidationProvider
+            name="詳細"
+            rules="required|min:10"
+            v-slot="{ errors }"
+          >
+            <b-form-textarea
+              id="deail"
+              v-model="form.detail"
+              placeholder="詳細を記入します"
+              rows="3"
+              max-rows="6"
+            />
+            <span class="text-danger">{{ errors[0] }}</span>
+          </ValidationProvider>
         </b-col>
       </b-row>
       <div slot="modal-footer" class="w-100">
