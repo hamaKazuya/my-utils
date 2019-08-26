@@ -1,6 +1,5 @@
-import { Mutation, MutationAction, Action, VuexModule, getModule, Module } from 'vuex-module-decorators'
-import { initialiseStores } from '@/store/index' // TODO これの役割がいまいちわからず
-import { TodoState, TodoObj } from '@/types/todo';
+import { Mutation, MutationAction, Action, VuexModule, Module } from 'vuex-module-decorators'
+import { TodoState, TodoObj } from '@/types/todo'
 
 @Module({
   stateFactory: true,
@@ -43,8 +42,3 @@ export default class Todo extends VuexModule implements TodoState {
     this.DELETE(id)
   }
 }
-
-// export default getModule(Todo)
-
-
-

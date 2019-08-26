@@ -54,22 +54,17 @@ import { todoStore } from '@/store'
 export default class Modal extends Vue {
   // FIXME 本当に!を入れないといけないのか。anyを指定するのは多分間違ってる
   @Ref() modalAdd!: any
-  // FIXME interfaceを指定している場合
-  // 初期値をinterfaceに合わせないといけない？面倒だし行が増えるし
-  form :TodoObj = {
+
+  defaultForm :TodoObj = {
     id: 0,
     title: '',
     isDone: false,
     detail: ''
   }
+  form: TodoObj = _.cloneDeep(this.defaultForm)
 
   resetForm() {
-    this.form = {
-      id: 0,
-      title: '',
-      isDone: false,
-      detail: ''
-    }
+    this.form = _.cloneDeep(this.defaultForm)
   }
   onCancel() {
     this.resetForm()
