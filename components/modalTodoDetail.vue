@@ -8,7 +8,7 @@
 </template>
 <script lang="ts">
 import { Component, Ref, Vue } from 'vue-property-decorator'
-import { Todo } from '@/types/todo/todo'
+import { TodoObj } from '@/types/todo'
 
 @Component
 export default class Modal extends Vue {
@@ -16,7 +16,7 @@ export default class Modal extends Vue {
 
   // TODO interfaceのせいで初期値をちゃんと入れないといけないようだけど
   // そうではない方法がある気がする
-  todo: Todo = {
+  todo: TodoObj = {
     id: 0,
     title: '',
     isDone: true,
@@ -24,8 +24,10 @@ export default class Modal extends Vue {
   }
 
   created() {
-    this.$on('show', (todo: Todo) => {
+    // on以外ほうほうないのかな
+    this.$on('show', (todo: TodoObj) => {
       this.todo = todo
+      debugger
       this.modal.show()
     })
   }

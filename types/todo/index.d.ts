@@ -1,5 +1,5 @@
 export interface TodoState {
-  todos: TodoObj[]
+  todoList: TodoObj[]
 }
 
 export interface TodoObj {

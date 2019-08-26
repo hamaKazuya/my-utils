@@ -1,14 +1,5 @@
-import Vuex, { StoreOptions } from 'vuex'
-import { RootState } from '../types/todo/todo'
-import { todos } from './todo'
-
-const store: StoreOptions<RootState> = {
-  state: {
-    version: '111'
-  },
-  modules: {
-    todos
-  }
-}
-
-export default new Vuex.Store<RootState>(store)
+import { Store } from 'vuex'
+import { initialiseStores } from '@/utils/store-accessor'
+const initializer = (store: Store<any>) => initialiseStores(store)
+export const plugins = [initializer]
+export * from '@/utils/store-accessor'

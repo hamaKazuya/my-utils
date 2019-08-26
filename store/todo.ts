@@ -1,16 +1,15 @@
 import { Mutation, MutationAction, Action, VuexModule, getModule, Module } from 'vuex-module-decorators'
-import store from '@/store/store'
-import { TodoState } from '~/types/todo/todo';
-// import { Todo, TodoState, RootState } from '@/types/todo/todo'
+import { initialiseStores } from '@/store/index' // TODO これの役割がいまいちわからず
+import { TodoState, TodoObj } from '@/types/todo';
 
 @Module({
-  dynamic: true,
-  store,
-  name: 'todo',
-  namespaced: true
+  stateFactory: true,
+  namespaced: true,
+  name: 'todo'
 })
-class Todo extends VuexModule implements TodoState {
-  todos = [
+
+export default class Todo extends VuexModule implements TodoState {
+  todoList = [
     {
       id: 0,
       title: 'いぬにご飯をあげる',
@@ -26,17 +25,17 @@ class Todo extends VuexModule implements TodoState {
   ]
   // mutation
   @Mutation
-  public ADD(todo: Todo) {
-   this.todos.push(todo)
+  public ADD(todo: TodoObj) {
+   this.todoList.push(todo)
   }
   @Mutation
   public DELETE(id: number) {
-    this.todos.filter(todo => todo.id !== id)
+    this.todoList.filter(todo => todo.id !== id)
   }
 
   // action
   @Action({})
-  public add(todo: Todo) {
+  public add(todo: TodoObj) {
     this.ADD(todo)
   }
   @Action({})
@@ -45,7 +44,7 @@ class Todo extends VuexModule implements TodoState {
   }
 }
 
-export const todoModule = getModule(Todo)
+// export default getModule(Todo)
 
 
 
