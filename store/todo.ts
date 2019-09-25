@@ -22,6 +22,7 @@ export default class Todo extends VuexModule implements TodoState {
       detail: 'かならずキューピー出ないといけない。カロリーオフもだめだ'
     }
   ]
+
   // mutation
   @Mutation
   public ADD(todo: TodoObj) {

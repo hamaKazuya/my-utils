@@ -60,7 +60,12 @@ export default class Index extends Vue {
 
   name: string = 'kazuya hama'
 
-  created() {}
+  async created() {
+    const path = '/api/v1/member'
+    // TODO TSのinterfaceのエラーっぽい何か
+    const res = await this.$axios.get(path)
+    console.log(res)
+  }
 
   // TODO 返り値の型を指定したいけどTodoStateではないらしい。なんでだ
   get todoList(): any {

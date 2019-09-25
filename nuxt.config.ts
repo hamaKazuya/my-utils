@@ -19,6 +19,7 @@ const nuxtConfig: Configuration = {
   css: [],
   plugins: [
     '@/plugins/common',
+    '@/plugins/axios',
     '@/plugins/vee-validate'
   ],
   buildModules: [
@@ -27,9 +28,33 @@ const nuxtConfig: Configuration = {
   ],
   modules: [
     'bootstrap-vue/nuxt',
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/proxy'
   ],
-  axios: {},
+  // modules: [
+  //   '@nuxtjs/axios',
+  //   '@nuxtjs/proxy',
+  // ],
+  axios: {
+  },
+  proxy: {
+    '/api': 'http://localhost:1313',
+  },
+// }
+  // axios: {
+  //   proxy: true,
+  //   browserBaseURL: 'http://localhost:1313/'
+  // },
+  // proxy: {
+  //   '/api': {
+  //     target: 'http://localhost:1313/api/',
+  //     pathRewrite: {
+  //       '^/api' : '/'
+  //     }
+  //   }
+    // '/api/': {target: 'http://localhost:1313/api/', pathRewrite: {'^/api/': '/'}}
+  // },
+
   build: {
     cache: true,
     extend (config, { isClient }) {
