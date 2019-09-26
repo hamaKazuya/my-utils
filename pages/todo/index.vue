@@ -61,7 +61,7 @@ export default class Index extends Vue {
   name: string = 'kazuya hama'
 
   async created() {
-    const path = '/api/v1/member'
+    const path = '/api/v1/todo'
     // TODO TSのinterfaceのエラーっぽい何か
     const res = await this.$axios.get(path)
     console.log(res)
