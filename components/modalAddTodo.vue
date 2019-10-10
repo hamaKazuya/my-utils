@@ -31,7 +31,7 @@
         <b-col sm="3">タイトル</b-col>
         <b-col sm="9">
           <ValidationProvider
-            rules="secret"
+            rules="required"
             v-slot="{ errors }"
           >
             <b-form-input

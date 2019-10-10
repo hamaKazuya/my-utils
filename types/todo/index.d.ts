@@ -3,8 +3,13 @@ export interface TodoState {
 }
 
 export interface TodoObj {
-  id: number,
-  title: string,
+  Id: number,
+  Title: string,
+  IsDone: boolean,
+  Detail: string
+}
+
+export interface UpdateIsDone {
   isDone: boolean,
-  detail: string
+  id: number
 }

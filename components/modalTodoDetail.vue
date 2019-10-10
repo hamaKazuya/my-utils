@@ -1,10 +1,10 @@
 <template>
-    <b-modal ref="modal">
-      id: {{ todo.id }},<br>
-      isDone: {{ todo.isDone }}<br>
-      title: {{ todo.title }}<br>
-      detail: {{ todo.detail }}
-    </b-modal>
+  <b-modal ref="modal">
+    id: {{ todo.Id }},<br>
+    isDone: {{ todo.IsDone }}<br>
+    title: {{ todo.Title }}<br>
+    detail: {{ todo.Detail }}
+  </b-modal>
 </template>
 <script lang="ts">
 import { Component, Ref, Vue } from 'vue-property-decorator'
@@ -27,7 +27,6 @@ export default class Modal extends Vue {
     // FIXME on以外方法ないのかな
     this.$on('show', (todo: TodoObj) => {
       this.todo = todo
-      debugger
       this.modal.show()
     })
   }

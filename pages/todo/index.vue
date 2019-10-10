@@ -7,15 +7,17 @@
         :key="todo.id"
         v-for="todo in todoList"
       >
-        {{ todo.id }},
+        {{ todo.Id }},
+        {{ todo.IsDone }}
         <b-form-checkbox
-          v-model="todo.isDone"
+          :value="todo.IsDone"
+          @change="updateIsDone({id: todo.Id, isDone: !todo.IsDone})"
         >
-          {{ todo.title }}
+          {{ todo.Title }}
         </b-form-checkbox>
         <b-button
           size="sm"
-          @click="showDetail(todo.id)"
+          @click="showDetail(todo.Id)"
         >
           showDetail
         </b-button>
@@ -45,7 +47,7 @@ import { Component, Vue, Emit, Ref } from 'vue-property-decorator'
 import modalTodoDetail from '@/components/modalTodoDetail.vue'
 import modalAddTodo from '@/components/modalAddTodo.vue'
 import { todoStore } from '@/store'
-import { TodoState, TodoObj } from '@/types/todo'
+import { TodoState, TodoObj, UpdateIsDone } from '@/types/todo'
 
 @Component({
   components: {
@@ -61,10 +63,12 @@ export default class Index extends Vue {
   name: string = 'kazuya hama'
 
   async created() {
-    const path = '/api/v1/todo'
+    const path = '/api/todo'
     // TODO TSのinterfaceのエラーっぽい何か
-    const res = await this.$axios.get(path)
-    console.log(res)
+    // import '@nuxtjs/axios'があれば行けるけどそうじゃない
+    // const res = await this.$axios.get(path)
+    // console.log(res)
+    todoStore.getTodos()
   }
 
   // TODO 返り値の型を指定したいけどTodoStateではないらしい。なんでだ
@@ -73,8 +77,14 @@ export default class Index extends Vue {
     return todoStore.todoList
   }
 
+  updateIsDone(obj: UpdateIsDone) {
+    console.log(obj)
+    todoStore.updateIsDone(obj)
+  }
+
   getTodoById(id: number) {
-    return this.todoList.find((todo: TodoObj) => todo.id === id)
+    // TODO interfaceがgoの構造体の定義に影響されて大文字よくない
+    return this.todoList.find((todo: TodoObj) => todo.Id === id)
   }
   addTodo(id: number) {
     this.modalAdd.$emit('add')

@@ -56,7 +56,7 @@ const nuxtConfig: Configuration = {
   // },
 
   build: {
-    cache: true,
+    // cache: true,
     extend (config, { isClient }) {
       if (isClient) {
         config.devtool = '#source-map'
