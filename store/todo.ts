@@ -47,7 +47,11 @@ export default class Todo extends VuexModule implements TodoState {
   @Action({})
   public async add(todo: TodoObj) {
     console.log('add: ', todo)
-    await $nuxt.$axios.post('/api/todo/add', todo)
+    const postParam = {
+      title: todo.title,
+      detail: todo.detail
+    }
+    await $nuxt.$axios.post('/api/todo/add', postParam)
       .then((res: any) => {
         console.log('post ok: ', res)
       })
@@ -69,7 +73,14 @@ export default class Todo extends VuexModule implements TodoState {
   }
 
   @Action({})
-  public delete(id: number) {
-    this.DELETE(id)
+  public async deleteTodoByID(todoID: number) {
+    await $nuxt.$axios.post('/api/todo/deleteTodoByID', todoID)
+      .then((res) => {
+        console.log('post ok', res)
+      })
+      .catch((e: any) => {
+        throw e
+      })
+    // this.DELETE(id)
   }
 }

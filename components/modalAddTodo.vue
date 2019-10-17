@@ -9,25 +9,6 @@
       @submit.stop.prevent="onSubmit"
     >
       <b-row class="mb-3">
-        <b-col sm="3">id</b-col>
-        <b-col sm="9">
-          <ValidationProvider
-            name="id"
-            rules="required|numeric|max_value:999|min_value:0"
-            v-slot="{ errors, flags }"
-          >
-            {{ flags }}
-            <b-form-input
-              id="title"
-              v-model="form.id"
-              type="number"
-              placeholder="todoタイトル"
-            />
-            <span class="text-danger">{{ errors[0] }}</span>
-          </ValidationProvider>
-        </b-col>
-      </b-row>
-      <b-row class="mb-3">
         <b-col sm="3">タイトル</b-col>
         <b-col sm="9">
           <ValidationProvider
@@ -103,7 +84,7 @@ export default class Modal extends Vue {
     this.resetForm()
   }
   onSubmit() {
-    this.form.id = todoStore.todoList.length
+    // this.form.id = todoStore.todoList.length
     todoStore.add(this.form)
     this.modalAdd.hide()
     this.resetForm()

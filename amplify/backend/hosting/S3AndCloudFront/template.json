@@ -20,6 +20,15 @@
         }
     },
     "Resources": {
+        "WAFIpBlock": {
+            "Type" : "AWS::WAF::WebACL",
+            "Properties" : {
+                "DefaultAction" : WafAction,
+                "MetricName" : String,
+                "Name" : String,
+                "Rules" : [ ActivatedRule, ... ]
+              }
+        }
         "S3Bucket": {
             "Type": "AWS::S3::Bucket",
             "DeletionPolicy": "Retain",

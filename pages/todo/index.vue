@@ -7,17 +7,15 @@
         :key="todo.id"
         v-for="todo in todoList"
       >
-        {{ todo.Id }},
-        {{ todo.IsDone }}
         <b-form-checkbox
-          :value="todo.IsDone"
-          @change="updateIsDone({id: todo.Id, isDone: !todo.IsDone})"
+          :checked="todo.isDone === 1"
+          @change="updateIsDone({id: todo.id, isDone: !todo.isDone})"
         >
-          {{ todo.Title }}
         </b-form-checkbox>
+        {{ todo.id }}, {{ todo.title }}
         <b-button
           size="sm"
-          @click="showDetail(todo.Id)"
+          @click="showDetail(todo.id)"
         >
           showDetail
         </b-button>
@@ -84,7 +82,7 @@ export default class Index extends Vue {
 
   getTodoById(id: number) {
     // TODO interfaceがgoの構造体の定義に影響されて大文字よくない
-    return this.todoList.find((todo: TodoObj) => todo.Id === id)
+    return this.todoList.find((todo: TodoObj) => todo.id === id)
   }
   addTodo(id: number) {
     this.modalAdd.$emit('add')
