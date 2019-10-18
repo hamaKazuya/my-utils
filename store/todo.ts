@@ -73,9 +73,20 @@ export default class Todo extends VuexModule implements TodoState {
   }
 
   @Action({})
+  public async updateTodoByID(afterTodo: TodoObj) {
+    await $nuxt.$axios.post('/api/todo/updateTodoByID', afterTodo)
+      .then((res: any) => {
+        console.log('updateTodoByID ok: ', res)
+      })
+      .catch((e: any) => {
+        throw e
+      })
+  }
+
+  @Action({})
   public async deleteTodoByID(todoID: number) {
     await $nuxt.$axios.post('/api/todo/deleteTodoByID', todoID)
-      .then((res) => {
+      .then((res: any) => {
         console.log('post ok', res)
       })
       .catch((e: any) => {

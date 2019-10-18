@@ -59,7 +59,7 @@
 </template>
 <script lang="ts">
 import { Component, Ref, Vue } from 'vue-property-decorator'
-import _ from 'lodash'
+import _ from 'lodash' // 都度importめんどいしglobalに持たせたい
 
 import { TodoObj } from '@/types/todo'
 import { todoStore } from '@/store'
