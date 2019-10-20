@@ -1,8 +1,22 @@
 <template>
   <div>
+    <the-header />
     <nuxt />
   </div>
 </template>
+<script lang="ts">
+import { Component, Vue, Emit, Ref } from 'vue-property-decorator'
+import TheHeader from '@/components/TheHeader.vue'
+
+@Component({
+  components: {
+    TheHeader,
+  }
+})
+export default class Index extends Vue {
+
+}
+</script>
 
 <style>
 html {

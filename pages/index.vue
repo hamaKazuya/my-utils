@@ -9,6 +9,9 @@
         My legendary Nuxt.js project
       </h2>
       <div class="links">
+        <a href="/todo" class="button--green">
+          todo
+        </a>
         <a href="https://nuxtjs.org/" target="_blank" class="button--green">
           Documentation
         </a>
