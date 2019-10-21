@@ -60,8 +60,8 @@ export default class Index extends Vue {
 
   name: string = 'kazuya hama'
 
-  async created() {
-    const path = '/api/todo'
+  created() {
+    // const path = '/api/todo'
     // TODO TSのinterfaceのエラーっぽい何か
     // import '@nuxtjs/axios'があれば行けるけどそうじゃない
     // const res = await this.$axios.get(path)

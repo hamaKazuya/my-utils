@@ -29,32 +29,14 @@ const nuxtConfig: Configuration = {
   modules: [
     'bootstrap-vue/nuxt',
     '@nuxtjs/axios',
-    '@nuxtjs/proxy'
+    '@nuxtjs/proxy',
+    '@nuxtjs/pwa',
   ],
-  // modules: [
-  //   '@nuxtjs/axios',
-  //   '@nuxtjs/proxy',
-  // ],
   axios: {
   },
   proxy: {
     '/api': 'http://localhost:1313',
   },
-// }
-  // axios: {
-  //   proxy: true,
-  //   browserBaseURL: 'http://localhost:1313/'
-  // },
-  // proxy: {
-  //   '/api': {
-  //     target: 'http://localhost:1313/api/',
-  //     pathRewrite: {
-  //       '^/api' : '/'
-  //     }
-  //   }
-    // '/api/': {target: 'http://localhost:1313/api/', pathRewrite: {'^/api/': '/'}}
-  // },
-
   build: {
     // cache: true,
     extend (config, { isClient }) {
@@ -62,8 +44,24 @@ const nuxtConfig: Configuration = {
         config.devtool = '#source-map'
       }
     }
-  }
+  },
 
+  // PWA
+  manifest: {
+    name: 'my-utils',
+    lang: 'ja',
+    short_name: 'my-utils',
+    title: 'my-utils',
+    'og:title': 'my-utils',
+    description: 'my-utils',
+    'og:description': 'my-utils',
+    theme_color: '#ffffff',
+    background_color: '#ffffff'
+  },
+  workbox: {
+    // 開発環境でもPWAを有効にする
+    dev: true,
+  }
 }
 
 export default nuxtConfig

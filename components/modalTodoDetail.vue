@@ -94,14 +94,14 @@ export default class Modal extends Vue {
 
   updateTodoById() {
     todoStore.updateTodoByID(this.todo)
-    this.$refs.modal.hide()
+    this.modal.hide()
     // TODO 更新成功しましたPUを出す
-    // this.$refs.modalSuccess.show()
+    // this.modalSuccess.show()
   }
 
   handleOk(id: number) {
-    todoStore.deleteTodoByID({ id })
-    this.$refs.modal.hide()
+    todoStore.deleteTodoByID(id)
+    this.modal.hide()
   }
 }
 </script>

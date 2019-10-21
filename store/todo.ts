@@ -1,4 +1,5 @@
 import { Mutation, MutationAction, Action, VuexModule, Module } from 'vuex-module-decorators'
+import axios from 'axios'
 import { TodoState, TodoObj, UpdateIsDone } from '@/types/todo'
 
 @Module({
@@ -36,7 +37,7 @@ export default class Todo extends VuexModule implements TodoState {
   public async getTodos() {
     const path = '/api/todo'
     // TODO $nuxtって絶対おかしい
-    await $nuxt.$axios.get(path).then((res: any) => {
+    await axios.get(path).then((res: any) => {
       this.SET_TODOS(res)
     }).catch ((e: any) => {
       throw e
@@ -51,7 +52,7 @@ export default class Todo extends VuexModule implements TodoState {
       title: todo.title,
       detail: todo.detail
     }
-    await $nuxt.$axios.post('/api/todo/add', postParam)
+    await axios.post('/api/todo/add', postParam)
       .then((res: any) => {
         console.log('post ok: ', res)
       })
@@ -63,7 +64,7 @@ export default class Todo extends VuexModule implements TodoState {
 
   @Action({})
   public async updateIsDone(obj: UpdateIsDone) {
-    await $nuxt.$axios.post('/api/todo/updateIsDone', obj)
+    await axios.post('/api/todo/updateIsDone', obj)
       .then((res) => {
         console.log('post ok:', res)
       })
@@ -74,7 +75,7 @@ export default class Todo extends VuexModule implements TodoState {
 
   @Action({})
   public async updateTodoByID(afterTodo: TodoObj) {
-    await $nuxt.$axios.post('/api/todo/updateTodoByID', afterTodo)
+    await axios.post('/api/todo/updateTodoByID', afterTodo)
       .then((res: any) => {
         console.log('updateTodoByID ok: ', res)
       })
@@ -85,7 +86,7 @@ export default class Todo extends VuexModule implements TodoState {
 
   @Action({})
   public async deleteTodoByID(todoID: number) {
-    await $nuxt.$axios.post('/api/todo/deleteTodoByID', todoID)
+    await axios.post('/api/todo/deleteTodoByID', todoID)
       .then((res: any) => {
         console.log('post ok', res)
       })
