@@ -31,7 +31,7 @@
       </b-form-group>
     </b-form>
     <template v-slot:modal-header>
-      <h5>TODO detail</h5>
+      <h5>TODO詳細</h5>
     </template>
 
     <template v-slot:modal-footer="{ cancel }">
@@ -93,6 +93,7 @@ export default class Modal extends Vue {
   }
 
   updateTodoById() {
+    this.todo.isDone = this.todo.isDone
     todoStore.updateTodoByID(this.todo)
     this.modal.hide()
     // TODO 更新成功しましたPUを出す

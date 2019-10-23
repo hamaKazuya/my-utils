@@ -1,10 +1,26 @@
 <template>
   <div class="container">
-    <h1>Todo</h1>
-    <b-list-group>
+    <h1 class="mt-3">Todo</h1>
+    <div class="d-flex justify-content-between">
+      <b-button-group class="todo-btns mt-1">
+        <b-button
+          variant="primary"
+          @click="addTodo"
+        >
+          Add
+        </b-button>
+      </b-button-group>
+      <select class="form-control todo-select-btn">
+        <option>すべて表示</option>
+        <option>Doneのみ</option>
+        <option>Done以外のみ</option>
+      </select>
+    </div>
+    <b-list-group class="mt-3">
       <b-list-group-item
-        class="cnt-todo-list"
+        class="cnt-todo-list list-group-item-action"
         :key="todo.id"
+        @click="showDetail(todo.id)"
         v-for="todo in todoList"
       >
         <b-form-checkbox
@@ -13,24 +29,8 @@
         >
         </b-form-checkbox>
         {{ todo.id }}, {{ todo.title }}
-        <b-button
-          size="sm"
-          @click="showDetail(todo.id)"
-        >
-          showDetail
-        </b-button>
       </b-list-group-item>
     </b-list-group>
-    <b-button-group class="mt-3">
-      <b-button
-        variant="primary"
-        @click="addTodo"
-      >
-        Add
-      </b-button>
-      <b-button>Button 2</b-button>
-      <b-button>Button 3</b-button>
-    </b-button-group>
     <modal-todo-detail
       ref="modal"
     />
@@ -61,11 +61,6 @@ export default class Index extends Vue {
   name: string = 'kazuya hama'
 
   created() {
-    // const path = '/api/todo'
-    // TODO TSのinterfaceのエラーっぽい何か
-    // import '@nuxtjs/axios'があれば行けるけどそうじゃない
-    // const res = await this.$axios.get(path)
-    // console.log(res)
     todoStore.getTodos()
   }
 
@@ -76,7 +71,6 @@ export default class Index extends Vue {
   }
 
   updateIsDone(obj: UpdateIsDone) {
-    console.log(obj)
     todoStore.updateIsDone(obj)
   }
 
@@ -96,5 +90,11 @@ export default class Index extends Vue {
 <style>
 .cnt-todo-list {
   display: flex;
+}
+.todo-btns {
+  width: 20%;
+}
+.todo-select-btn {
+  width: 30%;
 }
 </style>

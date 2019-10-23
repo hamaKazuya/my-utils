@@ -20,8 +20,8 @@ export default class Todo extends VuexModule implements TodoState {
 
   // mutation
   @Mutation
-  public SET_TODOS(todos: any) {
-    this.todoList = todos.data
+  public SET_TODOS(todoList: any) {
+    this.todoList = todoList
   }
   @Mutation
   public ADD(todo: TodoObj) {
@@ -38,7 +38,7 @@ export default class Todo extends VuexModule implements TodoState {
     const path = '/api/todo'
     // TODO $nuxtって絶対おかしい
     await axios.get(path).then((res: any) => {
-      this.SET_TODOS(res)
+      this.SET_TODOS(res.data)
     }).catch ((e: any) => {
       throw e
     })
@@ -54,7 +54,7 @@ export default class Todo extends VuexModule implements TodoState {
     }
     await axios.post('/api/todo/add', postParam)
       .then((res: any) => {
-        console.log('post ok: ', res)
+        this.SET_TODOS(res.data)
       })
       .catch((e: any) => {
         throw e
@@ -66,7 +66,7 @@ export default class Todo extends VuexModule implements TodoState {
   public async updateIsDone(obj: UpdateIsDone) {
     await axios.post('/api/todo/updateIsDone', obj)
       .then((res) => {
-        console.log('post ok:', res)
+        this.SET_TODOS(res.data)
       })
       .catch((e: any) => {
         throw e
@@ -77,7 +77,7 @@ export default class Todo extends VuexModule implements TodoState {
   public async updateTodoByID(afterTodo: TodoObj) {
     await axios.post('/api/todo/updateTodoByID', afterTodo)
       .then((res: any) => {
-        console.log('updateTodoByID ok: ', res)
+        this.SET_TODOS(res.data)
       })
       .catch((e: any) => {
         throw e
@@ -85,10 +85,11 @@ export default class Todo extends VuexModule implements TodoState {
   }
 
   @Action({})
-  public async deleteTodoByID(todoID: number) {
-    await axios.post('/api/todo/deleteTodoByID', todoID)
+  public async deleteTodoByID(ID: number) {
+    const obj = { ID }
+    await axios.post('/api/todo/deleteTodoByID', obj)
       .then((res: any) => {
-        console.log('post ok', res)
+        this.SET_TODOS(res.data)
       })
       .catch((e: any) => {
         throw e
