@@ -79,7 +79,7 @@ export default class Index extends Vue {
   updateIsDone(obj: UpdateIsDone) {
     todoStore.updateIsDone(obj)
   }
-  getTodoById(id: number):Todo {
+  getTodoById(id: number): Todo {
     return this.todoList.find((todo: Todo) => todo.id === id)
   }
   showAddModal(id: number) {

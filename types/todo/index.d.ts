@@ -1,6 +1,6 @@
-// export interface TodoList {
-//   todoList: Todo[]
-// }
+export interface TodoList {
+  todoList: Todo[]
+}
 
 export interface Todo {
   id: number,

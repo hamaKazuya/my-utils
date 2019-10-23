@@ -21,6 +21,7 @@ const nuxtConfig: Configuration = {
     '@/plugins/common',
     '@/plugins/axios',
     '@/plugins/vee-validate'
+
   ],
   buildModules: [
     // '@nuxtjs/eslint-module', // ハマった No ESLint configuration foundのエラー

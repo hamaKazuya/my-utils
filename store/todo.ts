@@ -1,6 +1,7 @@
 import { Mutation, MutationAction, Action, VuexModule, Module } from 'vuex-module-decorators'
 import axios from 'axios'
 import { TodoList, Todo, UpdateIsDone } from '@/types/todo'
+import { AxiosError, AxiosResponse } from 'axios'
 
 @Module({
   stateFactory: true,
@@ -36,9 +37,9 @@ export default class TodoStore extends VuexModule implements TodoList {
   @Action({ rawError: true })
   public async getTodos() {
     const path = '/api/todo'
-    await axios.get(path).then((res: any) => {
+    await axios.get(path).then((res: AxiosResponse) => {
       this.SET_TODOS(res.data)
-    }).catch ((e: any) => {
+    }).catch ((e: AxiosError) => {
       throw e
     })
 
@@ -46,28 +47,26 @@ export default class TodoStore extends VuexModule implements TodoList {
 
   @Action({})
   public async add(todo: Todo) {
-    console.log('add: ', todo)
     const postParam = {
       title: todo.title,
       detail: todo.detail
     }
     await axios.post('/api/todo/add', postParam)
-      .then((res: any) => {
+      .then((res: AxiosResponse) => {
         this.SET_TODOS(res.data)
       })
-      .catch((e: any) => {
+      .catch((e: AxiosError) => {
         throw e
       })
-    // this.ADD(todo)
   }
 
   @Action({})
   public async updateIsDone(obj: UpdateIsDone) {
     await axios.post('/api/todo/updateIsDone', obj)
-      .then((res) => {
+      .then((res: AxiosResponse) => {
         this.SET_TODOS(res.data)
       })
-      .catch((e: any) => {
+      .catch((e: AxiosError) => {
         throw e
       })
   }
@@ -75,10 +74,10 @@ export default class TodoStore extends VuexModule implements TodoList {
   @Action({})
   public async updateTodoByID(afterTodo: Todo) {
     await axios.post('/api/todo/updateTodoByID', afterTodo)
-      .then((res: any) => {
+      .then((res: AxiosResponse) => {
         this.SET_TODOS(res.data)
       })
-      .catch((e: any) => {
+      .catch((e: AxiosError) => {
         throw e
       })
   }
@@ -87,12 +86,11 @@ export default class TodoStore extends VuexModule implements TodoList {
   public async deleteTodoByID(ID: number) {
     const obj = { ID }
     await axios.post('/api/todo/deleteTodoByID', obj)
-      .then((res: any) => {
+      .then((res: AxiosResponse) => {
         this.SET_TODOS(res.data)
       })
-      .catch((e: any) => {
+      .catch((e: AxiosError) => {
         throw e
       })
-    // this.DELETE(id)
   }
 }
