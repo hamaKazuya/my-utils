@@ -59,10 +59,10 @@ const nuxtConfig: Configuration = {
     background_color: '#ffffff'
   },
   // TODO なんか不都合あるっぽいので一旦コメントアウト
-  // workbox: {
-  //   // 開発環境でもPWAを有効にする
-  //   dev: true,
-  // }
+  workbox: {
+    // 開発環境でもPWAを有効にする
+    dev: true,
+  }
 }
 
 export default nuxtConfig

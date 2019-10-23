@@ -5,7 +5,7 @@
       <b-button-group class="todo-btns mt-1">
         <b-button
           variant="primary"
-          @click="addTodo"
+          @click="showAddModal"
         >
           Add
         </b-button>
@@ -20,7 +20,7 @@
       <b-list-group-item
         class="cnt-todo-list list-group-item-action"
         :key="todo.id"
-        @click="showDetail(todo.id)"
+        @click="showDetailModal(todo.id)"
         v-for="todo in todoList"
       >
         <b-form-checkbox
@@ -31,21 +31,26 @@
         {{ todo.id }}, {{ todo.title }}
       </b-list-group-item>
     </b-list-group>
+    {{ currentTodo }}, {{ isDetailModalVisible }}, {{ isAddModalVisible }}
     <modal-todo-detail
-      ref="modal"
+      :is-visible="isDetailModalVisible"
+      :todo="currentTodo"
+      @handle-close="hideDetailModal"
     />
     <modal-add-todo
-      ref="modalAdd"
+      :is-visible="isAddModalVisible"
+      @handle-close="hideAddModal"
     />
   </div>
 </template>
 
 <script lang="ts">
+import _ from 'lodash'
 import { Component, Vue, Emit, Ref } from 'vue-property-decorator'
 import modalTodoDetail from '@/components/modalTodoDetail.vue'
 import modalAddTodo from '@/components/modalAddTodo.vue'
 import { todoStore } from '@/store'
-import { TodoState, TodoObj, UpdateIsDone } from '@/types/todo'
+import { Todo, UpdateIsDone } from '@/types/todo'
 
 @Component({
   components: {
@@ -54,35 +59,41 @@ import { TodoState, TodoObj, UpdateIsDone } from '@/types/todo'
   }
 })
 export default class Index extends Vue {
-  //!を使用しているけどどうやら初期値を指定しないといけないらしい
-  @Ref() modal!: modalTodoDetail
-  @Ref() modalAdd!: modalAddTodo
-
-  name: string = 'kazuya hama'
-
+  isDetailModalVisible: boolean = false
+  isAddModalVisible: boolean = false
+  currentTodo: Todo = {
+    id: 0,
+    title: '',
+    isDone: false,
+    detail: ''
+  }
+  // LifeCycle
   created() {
     todoStore.getTodos()
   }
-
-  // TODO 返り値の型を指定したいけどTodoStateではないらしい。なんでだ
-  get todoList(): any {
-    console.log(todoStore.todoList)
+  // Getters
+  get todoList(): Todo[] {
     return todoStore.todoList
   }
-
+  // Methods
   updateIsDone(obj: UpdateIsDone) {
     todoStore.updateIsDone(obj)
   }
-
-  getTodoById(id: number) {
-    // TODO interfaceがgoの構造体の定義に影響されて大文字よくない
-    return this.todoList.find((todo: TodoObj) => todo.id === id)
+  getTodoById(id: number):Todo {
+    return this.todoList.find((todo: Todo) => todo.id === id)
   }
-  addTodo(id: number) {
-    this.modalAdd.$emit('add')
+  showAddModal(id: number) {
+    this.isAddModalVisible = true
   }
-  showDetail(id: number) {
-    this.modal.$emit('show', this.getTodoById(id))
+  hideAddModal() {
+    this.isAddModalVisible = false
+  }
+  showDetailModal(id: number) {
+    this.isDetailModalVisible = true
+    this.currentTodo = _.cloneDeep(this.getTodoById(id))
+  }
+  hideDetailModal() {
+    this.isDetailModalVisible = false
   }
 }
 </script>

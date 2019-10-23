@@ -1,8 +1,8 @@
-export interface TodoState {
-  todoList: TodoObj[]
-}
+// export interface TodoList {
+//   todoList: Todo[]
+// }
 
-export interface TodoObj {
+export interface Todo {
   id: number,
   title: string,
   isDone: boolean,

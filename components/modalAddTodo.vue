@@ -1,9 +1,10 @@
 <template>
   <b-modal
     title="Todo作成"
-    ref="modalAdd"
+    :visible.sync="isVisible"
     @cancel="onCancel"
     hide-footer
+    no-close-on-backdrop
   >
     <b-form
       @submit.stop.prevent="onSubmit"
@@ -58,42 +59,40 @@
   </b-modal>
 </template>
 <script lang="ts">
-import { Component, Ref, Vue } from 'vue-property-decorator'
-import _ from 'lodash' // 都度importめんどいしglobalに持たせたい
+import { Component, Ref, Vue, Prop, Emit } from 'vue-property-decorator'
+import _ from 'lodash' // TODO 都度importめんどいしglobalに持たせたい
 
-import { TodoObj } from '@/types/todo'
+import { Todo } from '@/types/todo'
 import { todoStore } from '@/store'
 
 @Component
 export default class Modal extends Vue {
-  // FIXME 本当に!を入れないといけないのか。anyを指定するのは多分間違ってる
-  @Ref() modalAdd!: any
+  @Prop({ type: Boolean }) readonly isVisible!: boolean
 
-  defaultForm :TodoObj = {
+  defaultForm:Todo = {
     id: 0,
     title: '',
     isDone: false,
     detail: ''
   }
-  form: TodoObj = _.cloneDeep(this.defaultForm)
+
+  form:Todo = _.cloneDeep(this.defaultForm)
 
   resetForm() {
     this.form = _.cloneDeep(this.defaultForm)
   }
   onCancel() {
     this.resetForm()
+    this.handleClose()
   }
   onSubmit() {
-    // this.form.id = todoStore.todoList.length
     todoStore.add(this.form)
-    this.modalAdd.hide()
+    this.handleClose()
     this.resetForm()
   }
-  created() {
-    this.$on('add', () => {
-      this.modalAdd.show()
-    })
-  }
+
+  @Emit()
+  handleClose() {}
 
 }
 </script>

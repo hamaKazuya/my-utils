@@ -1,6 +1,6 @@
 import { Mutation, MutationAction, Action, VuexModule, Module } from 'vuex-module-decorators'
 import axios from 'axios'
-import { TodoState, TodoObj, UpdateIsDone } from '@/types/todo'
+import { TodoList, Todo, UpdateIsDone } from '@/types/todo'
 
 @Module({
   stateFactory: true,
@@ -8,7 +8,7 @@ import { TodoState, TodoObj, UpdateIsDone } from '@/types/todo'
   name: 'todo'
 })
 
-export default class Todo extends VuexModule implements TodoState {
+export default class TodoStore extends VuexModule implements TodoList {
   todoList = [
     {
       id: 0,
@@ -20,11 +20,11 @@ export default class Todo extends VuexModule implements TodoState {
 
   // mutation
   @Mutation
-  public SET_TODOS(todoList: any) {
+  public SET_TODOS(todoList: Todo[]) {
     this.todoList = todoList
   }
   @Mutation
-  public ADD(todo: TodoObj) {
+  public ADD(todo: Todo) {
    this.todoList.push(todo)
   }
   @Mutation
@@ -36,7 +36,6 @@ export default class Todo extends VuexModule implements TodoState {
   @Action({ rawError: true })
   public async getTodos() {
     const path = '/api/todo'
-    // TODO $nuxtって絶対おかしい
     await axios.get(path).then((res: any) => {
       this.SET_TODOS(res.data)
     }).catch ((e: any) => {
@@ -46,7 +45,7 @@ export default class Todo extends VuexModule implements TodoState {
   }
 
   @Action({})
-  public async add(todo: TodoObj) {
+  public async add(todo: Todo) {
     console.log('add: ', todo)
     const postParam = {
       title: todo.title,
@@ -74,7 +73,7 @@ export default class Todo extends VuexModule implements TodoState {
   }
 
   @Action({})
-  public async updateTodoByID(afterTodo: TodoObj) {
+  public async updateTodoByID(afterTodo: Todo) {
     await axios.post('/api/todo/updateTodoByID', afterTodo)
       .then((res: any) => {
         this.SET_TODOS(res.data)

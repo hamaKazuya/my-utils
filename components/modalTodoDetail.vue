@@ -1,6 +1,8 @@
 <template>
   <b-modal
-    ref="modal"
+    :visible.sync="isVisible"
+    @click="handleClose"
+    no-close-on-backdrop
   >
     id: {{ todo.id }},<br>
     <b-form>
@@ -34,7 +36,7 @@
       <h5>TODO詳細</h5>
     </template>
 
-    <template v-slot:modal-footer="{ cancel }">
+    <template v-slot:modal-footer>
       <div class="w-100">
         <div class="float-left">
           <b-button
@@ -49,7 +51,7 @@
           <b-button
             variant="secondary"
             size="sm"
-            @click="cancel()"
+            @click="handleClose"
           >
             Close
           </b-button>
@@ -66,43 +68,37 @@
   </b-modal>
 </template>
 <script lang="ts">
-import { Component, Ref, Vue } from 'vue-property-decorator'
+import { Component, Ref, Vue, Prop, Emit } from 'vue-property-decorator'
 import { todoStore } from '@/store'
-import { TodoObj } from '@/types/todo'
+import { Todo } from '@/types/todo'
 import _ from 'lodash'
 
 @Component
 export default class Modal extends Vue {
-  // FIXME 本当に!を入れないといけないのか。anyを指定するのは多分間違ってる
-  @Ref() modal!: any
-  // FIXME interfaceを指定している場合
-  // 初期値をinterfaceに合わせないといけない？面倒だし行が増えるし
-  todo: TodoObj = {
-    id: 0,
-    title: '',
-    isDone: true,
-    detail: ''
-  }
+  // NOTE: https://github.com/kaorun343/vue-property-decorator/issues/81
+  @Prop({ type: Boolean, default: false }) readonly isVisible!: boolean
+  @Prop({ type: Object, default: {} }) readonly todo!: Todo
 
   created() {
-    // FIXME on以外方法ないのかな
-    this.$on('show', (todo: TodoObj) => {
-      this.todo = _.cloneDeep(todo)
-      this.modal.show()
-    })
+    console.log(this.isVisible)
   }
 
   updateTodoById() {
     this.todo.isDone = this.todo.isDone
     todoStore.updateTodoByID(this.todo)
-    this.modal.hide()
+    this.handleClose()
     // TODO 更新成功しましたPUを出す
     // this.modalSuccess.show()
   }
 
   handleOk(id: number) {
     todoStore.deleteTodoByID(id)
-    this.modal.hide()
+    this.handleClose()
+  }
+
+  @Emit()
+  handleClose() {
+    console.log('handleClose')
   }
 }
 </script>
