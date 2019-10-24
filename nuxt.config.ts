@@ -58,12 +58,12 @@ const nuxtConfig: Configuration = {
     'og:description': 'my-utils',
     theme_color: '#ffffff',
     background_color: '#ffffff'
-  },
-  // TODO なんか不都合あるっぽいので一旦コメントアウト
-  workbox: {
-    // 開発環境でもPWAを有効にする
-    dev: true,
   }
+  // TODO なんか不都合あるっぽいので一旦コメントアウト
+  // workbox: {
+  //   // 開発環境でもPWAを有効にする
+  //   dev: true,
+  // }
 }
 
 export default nuxtConfig

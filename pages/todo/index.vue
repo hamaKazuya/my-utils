@@ -31,7 +31,6 @@
         {{ todo.id }}, {{ todo.title }}
       </b-list-group-item>
     </b-list-group>
-    {{ currentTodo }}, {{ isDetailModalVisible }}, {{ isAddModalVisible }}
     <modal-todo-detail
       :is-visible="isDetailModalVisible"
       :todo="currentTodo"

@@ -85,6 +85,7 @@ export default class Modal extends Vue {
 
   updateTodoById() {
     this.todo.isDone = this.todo.isDone
+    this.todo.isDone = this.todo.isDone|0 // TODO BE的にはintなのでとりあえずintにする
     todoStore.updateTodoByID(this.todo)
     this.handleClose()
     // TODO 更新成功しましたPUを出す
