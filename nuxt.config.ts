@@ -31,7 +31,8 @@ const nuxtConfig: Configuration = {
     'bootstrap-vue/nuxt',
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
-    '@nuxtjs/pwa',
+    // FIXME service workerがあると、何かの設定かが原因でrequestが終わらなくなってしまう
+    // '@nuxtjs/pwa',
   ],
   axios: {
   },
@@ -48,17 +49,17 @@ const nuxtConfig: Configuration = {
   },
 
   // PWA
-  manifest: {
-    name: 'my-utils',
-    lang: 'ja',
-    short_name: 'my-utils',
-    title: 'my-utils',
-    'og:title': 'my-utils',
-    description: 'my-utils',
-    'og:description': 'my-utils',
-    theme_color: '#ffffff',
-    background_color: '#ffffff'
-  }
+  // manifest: {
+  //   name: 'my-utils',
+  //   lang: 'ja',
+  //   short_name: 'my-utils',
+  //   title: 'my-utils',
+  //   'og:title': 'my-utils',
+  //   description: 'my-utils',
+  //   'og:description': 'my-utils',
+  //   theme_color: '#ffffff',
+  //   background_color: '#ffffff'
+  // }
   // TODO なんか不都合あるっぽいので一旦コメントアウト
   // workbox: {
   //   // 開発環境でもPWAを有効にする
