@@ -1,5 +1,6 @@
 <template>
   <div>
+    <the-spinner />
     <the-header />
     <nuxt />
   </div>
@@ -7,10 +8,12 @@
 <script lang="ts">
 import { Component, Vue, Emit, Ref } from 'vue-property-decorator'
 import TheHeader from '@/components/TheHeader.vue'
+import TheSpinner from '@/components/TheSpinner.vue'
 
 @Component({
   components: {
     TheHeader,
+    TheSpinner
   }
 })
 export default class Index extends Vue {

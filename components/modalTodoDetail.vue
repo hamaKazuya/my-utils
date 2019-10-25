@@ -1,47 +1,39 @@
 <template>
   <b-modal
     :visible.sync="isVisible"
-    @click="handleClose"
+    title="TODO詳細"
     no-close-on-backdrop
   >
-    id: {{ todo.id }},<br>
     <b-form>
       <b-form-group id="input-group-4">
         <b-form-checkbox v-model="todo.isDone">isDone</b-form-checkbox>
-        <b-row class="mb-3">
-          <b-col sm="2">
-            <label for="form-title">title: </label>
-          </b-col>
-          <b-col sm="10">
-            <b-form-input
-              v-model="todo.title"
-              id="form-title"
-            ></b-form-input>
-          </b-col>
-        </b-row>
-        <b-row>
-          <b-col sm="2">
-            <label for="form-detail">detail: </label>
-          </b-col>
-          <b-col sm="10">
-            <b-form-input
-              v-model="todo.detail"
-              id="form-detail"
-            ></b-form-input>
-          </b-col>
-        </b-row>
+        <label for="form-id" class="mt-3">ID</label>
+        <b-form-input
+          v-model="todo.id"
+          id="form-id"
+          disabled
+        ></b-form-input>
+        <label for="form-title" class="mt-3">タイトル</label>
+        <b-form-input
+          v-model="todo.title"
+          placeholder="タイトルを入力"
+          id="form-title"
+        ></b-form-input>
+        <label for="form-detail" class="mt-3">詳細</label>
+        <b-form-textarea
+          v-model="todo.detail"
+          id="form-detail"
+          placeholder="詳細を記入"
+          rows="3"
+          max-rows="6"
+        ></b-form-textarea>
       </b-form-group>
     </b-form>
-    <template v-slot:modal-header>
-      <h5>TODO詳細</h5>
-    </template>
-
     <template v-slot:modal-footer>
       <div class="w-100">
         <div class="float-left">
           <b-button
             variant="danger"
-            size="sm"
             @click="handleOk(todo.id)"
           >
             Delete
@@ -50,14 +42,12 @@
         <div class="float-right">
           <b-button
             variant="secondary"
-            size="sm"
             @click="handleClose"
           >
             Close
           </b-button>
           <b-button
             variant="primary"
-            size="sm"
             @click="updateTodoById()"
           >
             Update
@@ -84,7 +74,6 @@ export default class Modal extends Vue {
   }
 
   updateTodoById() {
-    this.todo.isDone = this.todo.isDone
     this.todo.isDone = this.todo.isDone|0 // TODO BE的にはintなのでとりあえずintにする
     todoStore.updateTodoByID(this.todo)
     this.handleClose()

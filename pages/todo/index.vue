@@ -16,21 +16,31 @@
         <option>Done以外のみ</option>
       </select>
     </div>
-    <b-list-group class="mt-3">
-      <b-list-group-item
-        class="cnt-todo-list list-group-item-action"
-        :key="todo.id"
-        @click="showDetailModal(todo.id)"
-        v-for="todo in todoList"
-      >
-        <b-form-checkbox
-          :checked="todo.isDone === 1"
-          @change="updateIsDone({id: todo.id, isDone: !todo.isDone})"
+    <template v-if="todoList.length > 0">
+      <b-list-group class="mt-3">
+        <b-list-group-item
+          class="cnt-todo-list list-group-item-action"
+          :key="todo.id"
+          @click="showDetailModal(todo.id)"
+          v-for="todo in todoList"
         >
-        </b-form-checkbox>
-        {{ todo.id }}, {{ todo.title }}
-      </b-list-group-item>
-    </b-list-group>
+          <b-form-checkbox
+            :checked="todo.isDone === 1"
+            @change="updateIsDone({id: todo.id, isDone: !todo.isDone})"
+          >
+          </b-form-checkbox>
+          {{ todo.id }}, {{ todo.title }}
+        </b-list-group-item>
+      </b-list-group>
+    </template>
+    <div
+      class="alert alert-primary mt-3"
+      role="alert"
+      v-else
+    >
+      Todoが存在しません<br>
+      Todoがある場合は追加してみましょう
+    </div>
     <modal-todo-detail
       :is-visible="isDetailModalVisible"
       :todo="currentTodo"
@@ -78,6 +88,7 @@ export default class Index extends Vue {
   updateIsDone(obj: UpdateIsDone) {
     todoStore.updateIsDone(obj)
   }
+  // TODO これtodosと内容同じだからぶっちゃけstoreからid指定で受け取ればいい
   getTodoById(id: number): Todo {
     return this.todoList.find((todo: Todo) => todo.id === id)
   }
