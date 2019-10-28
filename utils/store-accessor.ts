@@ -1,15 +1,19 @@
 import { Store } from 'vuex'
 import { getModule } from 'vuex-module-decorators'
-import TodoSore from '@/store/todo'
+import { default as Root } from '@/store/root'
+import { default as Todo } from '@/store/todo'
 
-let todoStore: TodoSore
+let rootStore: Root
+let todoStore: Todo
 
 function initialiseStores(store: Store<any>): void {
   // store追加するごとにこれを追加する必要がある(少々めんどい)
-  todoStore = getModule(TodoSore, store)
+  rootStore = getModule(Root, store)
+  todoStore = getModule(Todo, store)
 }
 
 export {
   initialiseStores,
+  rootStore,
   todoStore
 }

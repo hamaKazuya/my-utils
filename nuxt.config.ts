@@ -17,12 +17,6 @@ const nuxtConfig: Configuration = {
   },
   loading: { color: '#fff' },
   css: [],
-  plugins: [
-    '@/plugins/common',
-    '@/plugins/axios',
-    '@/plugins/vee-validate'
-
-  ],
   buildModules: [
     // '@nuxtjs/eslint-module', // ハマった No ESLint configuration foundのエラー
     '@nuxt/typescript-build'
@@ -33,6 +27,12 @@ const nuxtConfig: Configuration = {
     '@nuxtjs/proxy',
     // FIXME service workerがあると、何かの設定かが原因でrequestが終わらなくなってしまう
     // '@nuxtjs/pwa',
+  ],
+  plugins: [
+    '@/plugins/common',
+    '@/plugins/axios',
+    '@/plugins/vee-validate'
+
   ],
   axios: {
   },

@@ -1,4 +1,4 @@
-import { Mutation, MutationAction, Action, VuexModule, Module } from 'vuex-module-decorators'
+import { Mutation, Action, VuexModule, Module } from 'vuex-module-decorators'
 import axios from 'axios'
 import { TodoList, Todo, UpdateIsDone } from '@/types/todo'
 import { AxiosError, AxiosResponse } from 'axios'
@@ -38,6 +38,7 @@ export default class TodoStore extends VuexModule implements TodoList {
   public async getTodos() {
     const path = '/api/todo'
     await axios.get(path).then((res: AxiosResponse) => {
+      console.log('todo: ')
       this.SET_TODOS(res.data)
     }).catch ((e: AxiosError) => {
       throw e

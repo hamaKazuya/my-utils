@@ -1,14 +1,21 @@
 <template>
-  <div class="spinner d-flex justify-content-center text-primary">
+  <div
+    class="spinner justify-content-center text-primary"
+    v-show="isLoading"
+  >
     <b-spinner label="Loading..."></b-spinner>
   </div>
 </template>
 <script lang="ts">
 import { Vue } from 'vue-property-decorator'
-export default class Spinner extends Vue {}
+import { rootStore } from '@/store'
+export default class Spinner extends Vue {
+  isLoading = rootStore.isLoading
+}
 </script>
 <style lang="scss">
 .spinner {
+  display: flex;
   position: absolute;
   z-index: 9999;
   width: 100%;
