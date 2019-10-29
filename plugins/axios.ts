@@ -3,11 +3,8 @@ import { rootStore } from '@/store'
 
 // TODO $axiosの型定義を定義されたinterfaceが探せてない
 export default ({ $axios }: any) => {
-  console.log($axios)
   $axios.setToken('access_token')
-
   $axios.onRequest((config: AxiosRequestConfig) => {
-    debugger
     rootStore.changeLoadingVisibility(true)
     $axios.setHeader('Access-Control-Allow-Origin', '*')
     console.log('start request')
