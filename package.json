@@ -23,7 +23,7 @@
     "bootstrap-vue": "^2.0.0-rc.11",
     "lodash": "^4.17.15",
     "node-sass": "^4.13.0",
-    "nuxt": "^2.9.1",
+    "nuxt": "^2.15.8",
     "sass-loader": "^8.0.0",
     "vee-validate": "^3.0.2"
   },
